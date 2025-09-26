@@ -6,7 +6,7 @@
 
     <groupId>com.napier.devops</groupId>
     <artifactId>Methods</artifactId>
-    <version>0.1-alpha-2</version>
+    <version>0.2-alpha-2</version>
 
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
