@@ -1,0 +1,49 @@
+@startuml
+title HR System - Use Case Diagram
+
+actor HR as "HR Advisor"
+actor Mgr as "Department Manager"
+
+rectangle Database
+
+rectangle "HR System" {
+
+    ' --- Salary Reporting Use Cases ---
+    usecase UC1 as "Get All Salaries"
+    usecase UC2 as "Get Salaries by Department"
+    usecase UC3 as "Get Salaries by Role"
+    usecase UC4 as "Print Salaries"
+
+    ' --- Employee Management Use Cases ---
+    usecase UC5 as "Add Employee"
+    usecase UC6 as "View Employee"
+    usecase UC7 as "Update Employee"
+    usecase UC8 as "Delete Employee"
+
+    ' --- Relationships ---
+    UC1 ..> UC4 : include
+    UC2 ..> UC4 : include
+    UC3 ..> UC4 : include
+
+    ' Database dependencies
+    UC1 --> Database
+    UC2 --> Database
+    UC3 --> Database
+    UC5 --> Database
+    UC6 --> Database
+    UC7 --> Database
+    UC8 --> Database
+}
+
+' --- Actor Interactions ---
+HR --> UC1
+HR --> UC2
+HR --> UC3
+HR --> UC5
+HR --> UC6
+HR --> UC7
+HR --> UC8
+
+Mgr --> UC2
+
+@enduml
