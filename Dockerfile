@@ -5,10 +5,6 @@
 
 
 FROM openjdk:latest
-
+COPY ./target/Methods-0.1-alpha-2-jar-with-dependencies.jar /tmp
 WORKDIR /tmp
-
-# Make sure to include the .jar extension
-COPY ./target/Methods-0.2-alpha-2-jar-with-dependencies.jar /tmp
-
-ENTRYPOINT ["java", "-jar", "Methods-0.2-alpha-2-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "Methods-0.1-alpha-2-jar-with-dependencies.jar"]
