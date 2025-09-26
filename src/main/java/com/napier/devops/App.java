@@ -1,6 +1,7 @@
 package com.napier.devops;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App
 {
@@ -124,6 +125,48 @@ public class App
         }
     }
 
+    public ArrayList<Employee> getSalariesByRole(String title)
+    {
+        ArrayList<Employee> employees = new ArrayList<>();
+        try
+        {
+            // Create SQL statement
+            String strSelect =
+                    "SELECT e.emp_no, e.first_name, e.last_name, s.salary " +
+                            "FROM employees e, salaries s, titles t " +
+                            "WHERE e.emp_no = s.emp_no " +
+                            "AND e.emp_no = t.emp_no " +
+                            "AND s.to_date = '9999-01-01' " +
+                            "AND t.to_date = '9999-01-01' " +
+                            "AND t.title = ? " +
+                            "ORDER BY e.emp_no ASC";
+
+            PreparedStatement pstmt = con.prepareStatement(strSelect);
+            pstmt.setString(1, title);
+
+            // Execute query
+            ResultSet rset = pstmt.executeQuery();
+
+            // Process results
+            while (rset.next())
+            {
+                Employee emp = new Employee();
+                emp.emp_no = rset.getInt("emp_no");
+                emp.first_name = rset.getString("first_name");
+                emp.last_name = rset.getString("last_name");
+                emp.salary = rset.getInt("salary");
+                employees.add(emp);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get salaries by role");
+        }
+        return employees;
+    }
+
+
     public void displayEmployee(Employee emp)
     {
         if (emp != null)
@@ -141,6 +184,28 @@ public class App
             System.out.println("Employee is null");
     }
 
+    public void displayEmployees(ArrayList<Employee> employees)
+    {
+        if (employees == null || employees.isEmpty())
+        {
+            System.out.println("No employees found.");
+            return;
+        }
+
+        // Print header
+        System.out.printf("%-8s %-12s %-15s %-8s%n",
+                "EmpNo", "FirstName", "LastName", "Salary");
+        System.out.println("---------------------------------------------------");
+
+        // Print each employee in aligned columns
+        for (Employee emp : employees)
+        {
+            System.out.printf("%-8d %-12s %-15s %-8d%n",
+                    emp.emp_no, emp.first_name, emp.last_name, emp.salary);
+        }
+    }
+
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -149,10 +214,15 @@ public class App
         // Connect to database
         a.connect();
         // Get Employee
-        Employee emp = a.getEmployee(490758);
+//        Employee emp = a.getEmployee(490758);
         // Display results
-        a.displayEmployee(emp);
+//        a.displayEmployee(emp);
 
+
+
+        // Example: Get all salaries for "Engineer"
+        ArrayList<Employee> engineers = a.getSalariesByRole("Engineer");
+        a.displayEmployees(engineers);
         // Disconnect from database
         a.disconnect();
     }
