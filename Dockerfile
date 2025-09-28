@@ -9,6 +9,6 @@ FROM openjdk:latest
 WORKDIR /tmp
 
 # Make sure to include the .jar extension
-COPY ./target/Methods-0.1-alpha-4-jar-with-dependencies.jar /tmp
+COPY ./target/Methods-0.1-alpha-5-jar-with-dependencies.jar /tmp
 
-ENTRYPOINT ["java", "-jar", "Methods-0.1-alpha-4-jar-with-dependencies.jar"]
+ENTRYPOINT ["java", "-jar", "Methods-0.1-alpha-5-jar-with-dependencies.jar"]
