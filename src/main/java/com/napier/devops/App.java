@@ -106,8 +106,24 @@ public class App
                 emp.last_name = rset.getString("last_name");
                 emp.title = rset.getString("title");
                 emp.salary = rset.getInt("salary");
-                emp.dept_name = rset.getString("dept_name");
-                emp.manager = rset.getString("manager");
+
+                // --- FIX 1: Department Object Assignment ---
+                // Create a new Department object
+                Department dept = new Department();
+                // Set the department name using the String from the result set
+                dept.dept_name = rset.getString("dept_name");
+                // Assign the new Department object to the Employee field
+                emp.dept_name = dept;
+
+                // --- FIX 2: Manager (Employee) Object Assignment ---
+                // Create a new Employee object for the manager
+                Employee manager = new Employee();
+                // Since the query returns the manager's name as a single concatenated String,
+                // we'll store it in the manager's 'first_name' field for display purposes.
+                manager.first_name = rset.getString("manager");
+                // Assign the new Manager (Employee) object to the main Employee's manager field
+                emp.manager = manager;
+
                 return emp;
             }
             else
@@ -232,17 +248,26 @@ public class App
      */
     public void printSalaries(ArrayList<Employee> employees)
     {
+        // Check employees is not null
+        if (employees == null)
+        {
+            System.out.println("No employees");
+            return;
+        }
         // Print header
         System.out.println(String.format("%-10s %-15s %-20s %-8s", "Emp No", "First Name", "Last Name", "Salary"));
         // Loop over all employees in the list
         for (Employee emp : employees)
         {
+            if (emp == null)
+                continue;
             String emp_string =
                     String.format("%-10s %-15s %-20s %-8s",
                             emp.emp_no, emp.first_name, emp.last_name, emp.salary);
             System.out.println(emp_string);
         }
     }
+
 
 
     /**
