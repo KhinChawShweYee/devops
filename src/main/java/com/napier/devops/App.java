@@ -185,20 +185,36 @@ public class App
 
     public void displayEmployee(Employee emp)
     {
-        if (emp != null)
+        if (emp == null)
         {
-            System.out.println(
-                    emp.emp_no + " "
-                            + emp.first_name + " "
-                            + emp.last_name + "\n"
-                            + emp.title + "\n"
-                            + "Salary:" + emp.salary + "\n"
-                            + emp.dept_name + "\n"
-                            + "Manager: " + emp.manager + "\n");
-        }
-        else
             System.out.println("Employee is null");
+            return;
+        }
+
+        String firstName = (emp.first_name != null) ? emp.first_name : "[No first name]";
+        String lastName = (emp.last_name != null) ? emp.last_name : "[No last name]";
+        String title = (emp.title != null) ? emp.title : "[No title]";
+        String salaryStr = (emp.salary >= 0) ? "Salary: " + emp.salary : "Salary: [Invalid]";
+
+        // Handle Department association
+        String deptName = (emp.dept_name != null && emp.dept_name.dept_name != null)
+                ? emp.dept_name.dept_name
+                : "[No department]";
+
+        // Handle Manager association
+        String managerName = (emp.manager != null)
+                ? emp.manager.first_name + " " + emp.manager.last_name
+                : "[No manager]";
+
+        System.out.println(
+                emp.emp_no + " " + firstName + " " + lastName + "\n" +
+                        title + "\n" +
+                        salaryStr + "\n" +
+                        deptName + "\n" +
+                        "Manager: " + managerName + "\n"
+        );
     }
+
 
 
 

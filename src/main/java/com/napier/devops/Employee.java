@@ -40,6 +40,17 @@ public class Employee
      */
     public Employee manager;
 
-
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "emp_no=" + emp_no +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", title='" + title + '\'' +
+                ", salary=" + salary +
+                ", dept_name=" + dept_name +
+                ", manager=" + manager +
+                '}';
+    }
 }
 
